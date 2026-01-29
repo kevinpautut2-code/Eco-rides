@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Direct Login</title>
+    <style>
+        body { font-family: monospace; padding: 20px; }
+        .log { border: 1px solid #ccc; padding: 10px; margin: 10px 0; background: #f5f5f5; max-height: 400px; overflow-y: auto; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Test Login Direct</h1>
+    <button onclick="testLogin()">Test Login</button>
+    <button onclick="clearLog()">Clear Log</button>
+    <div class="log" id="log"></div>
+
+    <script>
+        const log = (msg) => {
+            const el = document.getElementById('log');
+            const line = document.createElement('div');
+            line.textContent = new Date().toLocaleTimeString() + ': ' + msg;
+            el.appendChild(line);
+            el.scrollTop = el.scrollHeight;
+        };
+
+        const clearLog = () => {
+            document.getElementById('log').innerHTML = '';
+        };
+
+        async function testLogin() {
+            log('=== STARTING LOGIN TEST ===');
+            
+            try {
+                const url = 'http://localhost:8000/backend/api/auth/login';
+                log(`URL: ${url}`);
+                
+                const payload = {
+                    email: 'passager@ecoride.fr',
+                    password: 'Test@2025!'
+                };
+                log(`Payload: ${JSON.stringify(payload)}`);
+                
+                log('Sending request...');
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                log(`Response status: ${response.status} ${response.statusText}`);
+                log(`Response headers: Content-Type=${response.headers.get('Content-Type')}`);
+                
+                const data = await response.json();
+                log(`Response data: ${JSON.stringify(data, null, 2)}`);
+                
+                if (data.success) {
+                    log('✅ LOGIN SUCCESS!');
+                    log(`Token: ${data.token}`);
+                } else {
+                    log('❌ LOGIN FAILED');
+                    log(`Message: ${data.message}`);
+                }
+            } catch (error) {
+                log(`❌ ERROR: ${error.message}`);
+                log(error.stack);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+# Dependencies
+vendor/
+/backend/vendor/
+/backend/mongodb-1.18.0/
+/node_modules/
+composer.phar
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Config files with credentials
+/backend/config/Database.php
+/backend/config/Mail.php
+
+# Logs
+*.log
+/backend/logs/
+/logs/
+
+# Temporary files
+/tmp/
+/temp/
+*.tmp
+
+# Uploaded files
+/uploads/
+/storage/
+
+# Cache
+/cache/
+*.cache
+
+# Database backups
+*.sql.gz
+*.sql.backup
+
+# PHPUnit
+.phpunit.result.cache
+/coverage/

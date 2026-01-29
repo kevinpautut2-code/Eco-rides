@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Système de Réservation</title>
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .test-container {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+        }
+        .test-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+        }
+        .test-status.success {
+            background: rgba(26, 125, 62, 0.1);
+            color: var(--success);
+        }
+        .test-status.error {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--danger);
+        }
+        .test-status.pending {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+        code {
+            background: var(--bg-secondary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .ride-preview {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test - Système de Réservation EcoRide</h1>
+
+        <!-- Test 1: Chargement des rides -->
+        <div class="test-section">
+            <h2>1️⃣ Chargement des trajets</h2>
+            <div id="ridesLoadTest" class="test-status pending">
+                ⏳ Test en cours...
+            </div>
+            <div id="ridesPreview"></div>
+        </div>
+
+        <!-- Test 2: Authentification -->
+        <div class="test-section">
+            <h2>2️⃣ Authentification</h2>
+            <div id="authTest" class="test-status pending">
+                ⏳ Test en cours...
+            </div>
+            <p>État de connexion: <code id="authStatus">Non connecté</code></p>
+        </div>
+
+        <!-- Test 3: Booking Manager -->
+        <div class="test-section">
+            <h2>3️⃣ Booking Manager</h2>
+            <div id="bookingTest" class="test-status pending">
+                ⏳ Test en cours...
+            </div>
+            <button class="btn btn-primary" onclick="testBookingFlow()">
+                💳 Tester une réservation
+            </button>
+        </div>
+
+        <!-- Test 4: API Bookings -->
+        <div class="test-section">
+            <h2>4️⃣ API Bookings</h2>
+            <div id="apiTest" class="test-status pending">
+                ⏳ Test en cours...
+            </div>
+            <button class="btn btn-primary" onclick="testBookingsAPI()">
+                🔗 Tester l'API bookings
+            </button>
+        </div>
+
+        <!-- Résumé -->
+        <div class="test-section">
+            <h2>📊 Résumé des tests</h2>
+            <div id="testSummary"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/theme.js"></script>
+    <script src="js/api.js"></script>
+
+    <script>
+        let testResults = {
+            rides: false,
+            auth: false,
+            booking: false,
+            api: false
+        };
+
+        // Test 1: Vérifier le chargement des rides
+        async function testRidesLoading() {
+            try {
+                const response = await fetch('/data/rides.json');
+                const data = await response.json();
+                
+                if (data.rides && data.rides.length > 0) {
+                    document.getElementById('ridesLoadTest').innerHTML = `
+                        ✅ <strong>Trajets chargés avec succès!</strong><br>
+                        ${data.rides.length} trajets trouvés
+                    `;
+                    document.getElementById('ridesLoadTest').className = 'test-status success';
+                    
+                    // Afficher un aperçu du premier trajet
+                    const ride = data.rides[0];
+                    document.getElementById('ridesPreview').innerHTML = `
+                        <div class="ride-preview">
+                            <strong>${ride.departure_city} → ${ride.arrival_city}</strong><br>
+                            Prix: ${ride.price_credits} crédits<br>
+                            Places: ${ride.seats_available}<br>
+                            Chauffeur: ${ride.driver_name}
+                        </div>
+                    `;
+                    
+                    testResults.rides = true;
+                    return true;
+                }
+            } catch (error) {
+                document.getElementById('ridesLoadTest').innerHTML = `
+                    ❌ <strong>Erreur:</strong> ${error.message}
+                `;
+                document.getElementById('ridesLoadTest').className = 'test-status error';
+            }
+            return false;
+        }
+
+        // Test 2: Vérifier l'authentification
+        function testAuthentication() {
+            const token = localStorage.getItem('ecoride_token');
+            const user = localStorage.getItem('ecoride_current_user');
+            
+            try {
+                if (token && user) {
+                    const userData = JSON.parse(user);
+                    document.getElementById('authTest').innerHTML = `
+                        ✅ <strong>Utilisateur connecté!</strong><br>
+                        Email: ${userData.email}<br>
+                        Rôle: ${userData.role}<br>
+                        Crédits: ${userData.credits}
+                    `;
+                    document.getElementById('authTest').className = 'test-status success';
+                    document.getElementById('authStatus').textContent = `${userData.email} (${userData.role})`;
+                    testResults.auth = true;
+                } else {
+                    document.getElementById('authTest').innerHTML = `
+                        ℹ️ <strong>Pas d'utilisateur connecté</strong><br>
+                        Vous pouvez vous connecter pour tester les réservations
+                    `;
+                    document.getElementById('authTest').className = 'test-status pending';
+                    document.getElementById('authStatus').textContent = 'Non connecté';
+                }
+            } catch (e) {
+                document.getElementById('authTest').innerHTML = `
+                    ❌ <strong>Erreur:</strong> ${e.message}
+                `;
+                document.getElementById('authTest').className = 'test-status error';
+            }
+        }
+
+        // Test 3: Vérifier le Booking Manager
+        function testBookingManager() {
+            if (typeof BookingManager !== 'undefined') {
+                document.getElementById('bookingTest').innerHTML = `
+                    ✅ <strong>Booking Manager chargé!</strong><br>
+                    La classe BookingManager est disponible
+                `;
+                document.getElementById('bookingTest').className = 'test-status success';
+                testResults.booking = true;
+            } else {
+                document.getElementById('bookingTest').innerHTML = `
+                    ⚠️ <strong>Booking Manager non trouvé</strong><br>
+                    Le script booking-manager.js n'a pas été chargé
+                `;
+                document.getElementById('bookingTest').className = 'test-status error';
+            }
+        }
+
+        // Test 4: Tester l'API bookings
+        async function testBookingsAPI() {
+            const token = localStorage.getItem('ecoride_token');
+            
+            if (!token) {
+                alert('Veuillez vous connecter d\'abord');
+                return;
+            }
+
+            try {
+                const response = await fetch('/backend/api/bookings', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('apiTest').innerHTML = `
+                        ✅ <strong>API Bookings fonctionnelle!</strong><br>
+                        ${data.bookings ? data.bookings.length : 0} réservations trouvées
+                    `;
+                    document.getElementById('apiTest').className = 'test-status success';
+                    testResults.api = true;
+                } else {
+                    document.getElementById('apiTest').innerHTML = `
+                        ❌ <strong>Erreur API:</strong> ${response.status}
+                    `;
+                    document.getElementById('apiTest').className = 'test-status error';
+                }
+            } catch (error) {
+                document.getElementById('apiTest').innerHTML = `
+                    ❌ <strong>Erreur:</strong> ${error.message}
+                `;
+                document.getElementById('apiTest').className = 'test-status error';
+            }
+        }
+
+        // Tester le flux de réservation
+        function testBookingFlow() {
+            if (!localStorage.getItem('ecoride_token')) {
+                alert('Veuillez vous connecter pour tester une réservation');
+                window.location.href = '/login.html';
+                return;
+            }
+
+            if (typeof bookingManager !== 'undefined') {
+                bookingManager.openReservationModal(1);
+            } else {
+                alert('Booking Manager non disponible. Veuillez recharger la page.');
+            }
+        }
+
+        // Générer le résumé
+        function generateSummary() {
+            const total = Object.keys(testResults).length;
+            const passed = Object.values(testResults).filter(v => v).length;
+            
+            document.getElementById('testSummary').innerHTML = `
+                <p><strong>Résultats:</strong> ${passed}/${total} tests réussis</p>
+                <ul>
+                    <li>✅ Trajets: ${testResults.rides ? 'OK' : 'KO'}</li>
+                    <li>✅ Auth: ${testResults.auth ? 'OK' : 'ℹ️ Pas de session'}</li>
+                    <li>✅ Booking Manager: ${testResults.booking ? 'OK' : 'KO'}</li>
+                    <li>✅ API: ${testResults.api ? 'OK' : 'ℹ️ Non testé'}</li>
+                </ul>
+            `;
+        }
+
+        // Lancer les tests au chargement
+        document.addEventListener('DOMContentLoaded', async () => {
+            await testRidesLoading();
+            testAuthentication();
+            
+            // Charger booking-manager.js
+            const script = document.createElement('script');
+            script.src = '/js/booking-manager.js';
+            script.onload = () => {
+                testBookingManager();
+                generateSummary();
+            };
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>

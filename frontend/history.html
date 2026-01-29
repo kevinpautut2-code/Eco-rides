@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique - EcoRide</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <div class="navbar-logo">🌱</div>
+                <span>EcoRide</span>
+            </a>
+
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html" class="navbar-link"><span>Accueil</span></a></li>
+                <li><a href="rides.html" class="navbar-link"><span>Covoiturages</span></a></li>
+                <li><a href="dashboard.html" class="navbar-link"><span>Mon Espace</span></a></li>
+                <li><a href="history.html" class="navbar-link active"><span>Historique</span></a></li>
+            </ul>
+
+            <div class="navbar-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <div class="theme-toggle-slider">
+                        <span id="themeIcon">☀️</span>
+                    </div>
+                </button>
+
+                <button class="navbar-toggle" id="navbarToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
+        <div class="card mb-lg" style="background: var(--gradient-eco); color: white;">
+            <div class="card-body" style="padding: 2rem;">
+                <h1 style="color: white; margin-bottom: 0.5rem;">Mon Historique</h1>
+                <p style="color: rgba(255,255,255,0.9); margin: 0;">Tous vos trajets passés et à venir</p>
+            </div>
+        </div>
+
+        <!-- Statistics Overview -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-green);">Conducteur</div>
+                    <div class="stat-value" id="totalAsDriver">8</div>
+                    <div class="stat-label">Trajets en tant que chauffeur</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body text-center">
+                    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-teal);">Passager</div>
+                    <div class="stat-value" id="totalAsPassenger">15</div>
+                    <div class="stat-label">Trajets en tant que passager</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body text-center">
+                    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--success-green);">Crédits</div>
+                    <div class="stat-value" id="totalCreditsEarned">340</div>
+                    <div class="stat-label">Crédits gagnés</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body text-center">
+                    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; color: var(--primary-green);">CO₂</div>
+                    <div class="stat-value" id="co2Saved">125</div>
+                    <div class="stat-label">kg CO₂ économisés</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="card mb-md">
+            <div class="card-body">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <div>
+                        <label class="form-label" style="margin-bottom: 0.5rem;">Afficher:</label>
+                        <select id="statusFilter" class="form-control" style="min-width: 200px;">
+                            <option value="all">Tous les trajets</option>
+                            <option value="upcoming">À venir</option>
+                            <option value="in_progress">En cours</option>
+                            <option value="completed">Terminés</option>
+                            <option value="cancelled">Annulés</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label" style="margin-bottom: 0.5rem;">Rôle:</label>
+                        <select id="roleFilter" class="form-control" style="min-width: 200px;">
+                            <option value="all">Tous les rôles</option>
+                            <option value="driver">En tant que chauffeur</option>
+                            <option value="passenger">En tant que passager</option>
+                        </select>
+                    </div>
+
+                    <div style="flex: 1;"></div>
+
+                    <div>
+                        <label class="form-label" style="margin-bottom: 0.5rem;">&nbsp;</label>
+                        <button class="btn btn-secondary" onclick="applyFilters()">
+                            <span>🔍</span>
+                            <span>Filtrer</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rides List -->
+        <div id="historyList">
+            <!-- Trip cards will be dynamically inserted here by history.js -->
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-bottom">
+                <p>© 2025 EcoRide - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/history.js"></script>
+</body>
+</html>

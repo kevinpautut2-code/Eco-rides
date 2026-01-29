@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un trajet - EcoRide</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/design-system.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <div class="navbar-logo">🌱</div>
+                <span>EcoRide</span>
+            </a>
+
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="index.html" class="navbar-link"><span>Accueil</span></a></li>
+                <li><a href="rides.html" class="navbar-link"><span>Covoiturages</span></a></li>
+                <li><a href="dashboard.html" class="navbar-link"><span>Mon Espace</span></a></li>
+            </ul>
+
+            <div class="navbar-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <div class="theme-toggle-slider">
+                        <span id="themeIcon">☀️</span>
+                    </div>
+                </button>
+
+                <button class="navbar-toggle" id="navbarToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <div class="card">
+                <div class="card-header">
+                    <h1 style="margin: 0;">Créer un trajet</h1>
+                    <p style="color: var(--text-secondary); margin: 0.5rem 0 0 0;">Proposez un covoiturage et gagnez des crédits</p>
+                </div>
+
+                <div class="card-body">
+                    <form id="createRideForm">
+                        <div class="form-group">
+                            <label class="form-label">Véhicule</label>
+                            <select id="vehicle" class="form-control" required>
+                                <option value="">Sélectionner un véhicule</option>
+                                <option value="1">Tesla Model 3 - Blanc ⚡</option>
+                                <option value="2">Renault Zoe - Bleu ⚡</option>
+                                <option value="3">Peugeot 208 - Rouge</option>
+                            </select>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label">Ville de départ</label>
+                                <input type="text" id="departureCity" class="form-control" placeholder="Paris" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Ville d'arrivée</label>
+                                <input type="text" id="arrivalCity" class="form-control" placeholder="Lyon" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Adresse complète de départ</label>
+                            <input type="text" id="departureAddress" class="form-control" placeholder="1 Place de la République, 75003 Paris" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Adresse complète d'arrivée</label>
+                            <input type="text" id="arrivalAddress" class="form-control" placeholder="15 Rue de la République, 69001 Lyon" required>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label">Date et heure de départ</label>
+                                <input type="datetime-local" id="departureDateTime" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Date et heure d'arrivée</label>
+                                <input type="datetime-local" id="arrivalDateTime" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label class="form-label">👥 Places disponibles</label>
+                                <input type="number" id="seats" class="form-control" min="1" max="8" value="3" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Prix (crédits)</label>
+                                <input type="number" id="price" class="form-control" min="5" value="45" required>
+                                <div class="form-helper">Minimum 5 crédits (2 crédits de frais plateforme inclus)</div>
+                            </div>
+                        </div>
+
+                        <div style="padding: 1.5rem; background: var(--bg-tertiary); border-radius: var(--radius-md); margin: 1.5rem 0;">
+                            <h4 style="margin-bottom: 1rem;">Récapitulatif financier</h4>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span>Prix par passager:</span>
+                                <strong id="displayPrice">45 crédits</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; color: var(--text-tertiary);">
+                                <span>Frais de plateforme (par passager):</span>
+                                <span>2 crédits</span>
+                            </div>
+                            <div style="border-top: 1px solid var(--border-medium); margin-top: 0.5rem; padding-top: 0.5rem; display: flex; justify-content: space-between;">
+                                <span>Vous recevrez (par passager):</span>
+                                <strong style="color: var(--primary-green);" id="driverEarnings">43 crédits</strong>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-size: var(--font-size-sm); color: var(--text-tertiary);">
+                                Total maximum avec <span id="maxSeats">3</span> passager(s): <strong id="maxEarnings">129 crédits</strong>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                            <a href="dashboard.html" class="btn btn-secondary" style="flex: 1;">
+                                <span>←</span>
+                                <span>Annuler</span>
+                            </a>
+                            <button type="submit" class="btn btn-primary" style="flex: 2;">
+                                <span>✓</span>
+                                <span>Publier le trajet</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-bottom">
+                <p>© 2025 EcoRide - Tous droits réservés</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/theme.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/create-ride.js"></script>
+</body>
+</html>

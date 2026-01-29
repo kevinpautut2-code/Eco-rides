@@ -1,0 +1,24 @@
+==> Searching for similarly named formulae and casks...
+==> Formulae
+asm6809
+atari800
+mysql-client@8.0
+mysql@8.0
+percona-server@8.0
+percona-xtrabackup@8.0
+shivammathur/php/php@8.0
+shivammathur/php/php@8.0-debug
+shivammathur/php/php@8.0-debug-zts
+shivammathur/php/php@8.0-zts
+z80asm
+z80dasm
+
+To install asm6809, run:
+  brew install asm6809
+
+==> Casks
+font-rubik-80s-fade
+tic80
+
+To install font-rubik-80s-fade, run:
+  brew install --cask font-rubik-80s-fade

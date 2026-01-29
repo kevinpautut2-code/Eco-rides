@@ -1,0 +1,141 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "pseudo": "admin",
+      "email": "admin@ecoride.fr",
+      "password": "Test@2025!",
+      "role": "admin",
+      "credits": 1000,
+      "photo_url": "https://i.pravatar.cc/150?img=1"
+    },
+    {
+      "id": 2,
+      "pseudo": "employe1",
+      "email": "employe@ecoride.fr",
+      "password": "Test@2025!",
+      "role": "employee",
+      "credits": 100,
+      "photo_url": "https://i.pravatar.cc/150?img=2"
+    },
+    {
+      "id": 3,
+      "pseudo": "employe2",
+      "email": "sophie.martin@ecoride.fr",
+      "password": "Test@2025!",
+      "role": "employee",
+      "credits": 100,
+      "photo_url": "https://i.pravatar.cc/150?img=3"
+    },
+    {
+      "id": 4,
+      "pseudo": "chauffeur",
+      "email": "chauffeur@ecoride.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "driver",
+      "credits": 150,
+      "photo_url": "https://i.pravatar.cc/150?img=4"
+    },
+    {
+      "id": 5,
+      "pseudo": "marie_eco",
+      "email": "marie.dupont@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "driver",
+      "credits": 200,
+      "photo_url": "https://i.pravatar.cc/150?img=5"
+    },
+    {
+      "id": 6,
+      "pseudo": "thomas_green",
+      "email": "thomas.bernard@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "driver",
+      "credits": 180,
+      "photo_url": "https://i.pravatar.cc/150?img=6"
+    },
+    {
+      "id": 7,
+      "pseudo": "julie_planet",
+      "email": "julie.petit@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "both",
+      "credits": 220,
+      "photo_url": "https://i.pravatar.cc/150?img=7"
+    },
+    {
+      "id": 8,
+      "pseudo": "lucas_drive",
+      "email": "lucas.robert@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "both",
+      "credits": 190,
+      "photo_url": "https://i.pravatar.cc/150?img=8"
+    },
+    {
+      "id": 9,
+      "pseudo": "emma_green",
+      "email": "emma.richard@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "driver",
+      "credits": 160,
+      "photo_url": "https://i.pravatar.cc/150?img=9"
+    },
+    {
+      "id": 10,
+      "pseudo": "passager",
+      "email": "passager@ecoride.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "passenger",
+      "credits": 50,
+      "photo_url": "https://i.pravatar.cc/150?img=10"
+    },
+    {
+      "id": 11,
+      "pseudo": "pierre_voyage",
+      "email": "pierre.durand@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "passenger",
+      "credits": 80,
+      "photo_url": "https://i.pravatar.cc/150?img=11"
+    },
+    {
+      "id": 12,
+      "pseudo": "sarah_travel",
+      "email": "sarah.moreau@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "passenger",
+      "credits": 60,
+      "photo_url": "https://i.pravatar.cc/150?img=12"
+    },
+    {
+      "id": 13,
+      "pseudo": "alex_road",
+      "email": "alex.simon@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "passenger",
+      "credits": 90,
+      "photo_url": "https://i.pravatar.cc/150?img=13"
+    },
+    {
+      "id": 14,
+      "pseudo": "nadia_eco",
+      "email": "nadia.laurent@email.fr",
+      "password": "Test@2025!",
+      "role": "user",
+      "user_type": "passenger",
+      "credits": 70,
+      "photo_url": "https://i.pravatar.cc/150?img=14"
+    }
+  ]
+}
